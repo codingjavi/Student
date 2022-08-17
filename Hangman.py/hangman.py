@@ -1,7 +1,8 @@
 import string
 import random
 #get a random word
-words = ["bird", "turd", "herd", "python", "chair", "glass", "mop", "shoes", "dog", "mat", "cat", "hereditary", "television", "sousaphone"]
+words = ["totally"]
+#"bird", "turd", "herd", "python", "chair", "glass", "mop", "shoes", "dog", "mat", "cat", "hereditary", "television", "sousaphone"]
 word = random.choice(words)
 loop = 0
 win = False
@@ -45,14 +46,23 @@ def check_guess(guess):
 
     #checks all the letters in word
     check = False
-    for i in word:
+    for i in word_board(): #shoes
         if i == guess:
             #finding where in the letter guess equals i using .index()
-            placing = word.index(guess)
-            
+        
+            #check where i is in word_board(could be multiple places)
+
+            placing = word_board().index(i)
+            blank_board[placing] = guess
+
+            slice = word_board()[placing + 1: len(word_board()) ]
+            for i in slice:
+                if i == guess:
+                    second_placing = slice.index(i) + 1
+                    blank_board[second_placing] = guess
             #inserting the users guess into the blank board
             #inserting method doesn't work, we have to replace the blank space with the guess
-            blank_board[placing] = guess
+            
             check = True
     if check == False:
         loop = loop + 1
