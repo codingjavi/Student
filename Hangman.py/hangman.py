@@ -1,7 +1,7 @@
 import string
 import random
 #get a random word
-words = ["totally"]
+words = ["shoes"]
 #"bird", "turd", "herd", "python", "chair", "glass", "mop", "shoes", "dog", "mat", "cat", "hereditary", "television", "sousaphone"]
 word = random.choice(words)
 loop = 0
@@ -48,21 +48,29 @@ def check_guess(guess):
     check = False
     for i in word_board(): #shoes
         if i == guess:
+            #needed help with this
+
+            #enumerate works like this (x, y), x is the number(place) and y(letter) is the value
+            #indices = [0, 4] if shoes is in
+            #i for i in enumerate (i, x) for every x or (letter) in enumerate, AND only goes in list if letter is == guess
+            #letter in enumerate(word) just loops over the letters in enumerate(word) to check if letter == guess
+            #so basically indices only takes the i in (i, x)
+            #enumerate creates an object that contains a counter for each value(letters)
+            #it runs through the object and takes the i if letter == guess
+            #i for (i, letter) in enumerate(word) if letter == guess
+            indices = [i for i, letter in enumerate(word) if letter == guess]
+            #goes thru list of index's in indices
+            for index in indices: #(x, y) for x in indices
+                blank_board[index] = guess
+
+
+            #this was my first attempt
             #finding where in the letter guess equals i using .index()
-        
             #check where i is in word_board(could be multiple places)
-
-            placing = word_board().index(i)
-            blank_board[placing] = guess
-
-            slice = word_board()[placing + 1: len(word_board()) ]
-            for i in slice:
-                if i == guess:
-                    second_placing = slice.index(i) + 1
-                    blank_board[second_placing] = guess
             #inserting the users guess into the blank board
             #inserting method doesn't work, we have to replace the blank space with the guess
-            
+            """placing = word_board().index(i)
+            blank_board[placing] = guess"""
             check = True
     if check == False:
         loop = loop + 1
@@ -164,7 +172,7 @@ def play():
         check = False
         while check == False:
             user_guess = input("Guess a letter ")
-            if user_guess not in alphabet_list:
+            if user_guess not in alphabet_list: #or .isalpha()
                 print("Sorry, type in a valid letter")
                 continue
             else:
